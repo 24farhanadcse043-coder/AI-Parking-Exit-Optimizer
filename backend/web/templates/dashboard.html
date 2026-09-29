@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ParkAI | Intelligent Parking Control Center</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/dashboard.css"
+    >
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                🅿️
+            </div>
+
+            <div>
+                <h1>ParkAI</h1>
+                <span>SMART PARKING</span>
+            </div>
+
+        </div>
+
+
+        <div class="system-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+                <strong>System Online</strong>
+                <small>AI engine active</small>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <p class="nav-title">CONTROL CENTER</p>
+
+            <a
+                href="#overview"
+                class="nav-item active"
+            >
+                <span>◉</span>
+                Overview
+            </a>
+
+            <a
+                href="#parking"
+                class="nav-item"
+            >
+                <span>▦</span>
+                Parking Map
+            </a>
+
+            <a
+                href="#vehicles"
+                class="nav-item"
+            >
+                <span>🚗</span>
+                Vehicles
+            </a>
+
+            <a
+                href="#exits"
+                class="nav-item"
+            >
+                <span>🚪</span>
+                Exit Intelligence
+            </a>
+
+            <a
+                href="#vision"
+                class="nav-item"
+            >
+                <span>📷</span>
+                Vision AI
+            </a>
+
+            <a
+                href="#emergency"
+                class="nav-item"
+            >
+                <span>🚨</span>
+                Emergency
+            </a>
+
+            <p class="nav-title">SYSTEM</p>
+
+            <a
+                href="#activity"
+                class="nav-item"
+            >
+                <span>◷</span>
+                Live Activity
+            </a>
+
+            <a
+                href="/docs"
+                target="_blank"
+                class="nav-item"
+            >
+                <span>⌘</span>
+                API Console
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="ai-mini">
+
+                <div class="ai-icon">
+                    🧠
+                </div>
+
+                <div>
+                    <strong>AI Engine</strong>
+                    <small>Random Forest</small>
+                </div>
+
+                <span class="online-pill">
+                    ACTIVE
+                </span>
+
+            </div>
+
+            <div class="version">
+                ParkAI v1.0
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="eyebrow">
+                    INTELLIGENT PARKING INFRASTRUCTURE
+                </span>
+
+                <h2>
+                    AI Parking
+                    <span>Control Center</span>
+                </h2>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <div class="live-clock">
+                    <span class="clock-dot"></span>
+                    <span id="liveClock">--:--:--</span>
+                </div>
+
+                <button
+                    class="icon-button"
+                    title="Refresh dashboard"
+                    onclick="loadDashboard()"
+                >
+                    ↻
+                </button>
+
+                <div class="operator">
+
+                    <div class="operator-avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>Control Center</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             OVERVIEW
+        ================================================== -->
+
+        <section
+            id="overview"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        REAL-TIME OVERVIEW
+                    </span>
+
+                    <h3>
+                        Parking intelligence at a glance
+                    </h3>
+
+                </div>
+
+                <div class="live-indicator">
+                    <span></span>
+                    LIVE DATA
+                </div>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stat-grid">
+
+                <div class="stat-card blue-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon">
+                            🅿️
+                        </span>
+
+                        <span class="stat-live">
+                            LIVE
+                        </span>
+
+                    </div>
+
+                    <p>Total Parking</p>
+
+                    <h4 id="totalSpaces">
+                        --
+                    </h4>
+
+                    <small>
+                        Registered parking spaces
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card green-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon">
+                            ✓
+                        </span>
+
+                        <span class="stat-live">
+                            AVAILABLE
+                        </span>
+
+                    </div>
+
+                    <p>Available Spaces</p>
+
+                    <h4 id="availableSpaces">
+                        --
+                    </h4>
+
+                    <small>
+                        Spaces currently free
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card orange-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon">
+                            🚗
+                        </span>
+
+                        <span class="stat-live">
+                            MONITORED
+                        </span>
+
+                    </div>
+
+                    <p>Occupied Spaces</p>
+
+                    <h4 id="occupiedSpaces">
+                        --
+                    </h4>
+
+                    <small>
+                        Current occupancy
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card purple-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon">
+                            🧠
+                        </span>
+
+                        <span class="stat-live">
+                            AI
+                        </span>
+
+                    </div>
+
+                    <p>AI Status</p>
+
+                    <h4 id="aiStatus">
+                        ACTIVE
+                    </h4>
+
+                    <small>
+                        Prediction engine running
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AI COMMAND CENTER
+        ================================================== -->
+
+        <section class="ai-command-grid">
+
+            <!-- AI RECOMMENDATION -->
+
+            <div class="ai-command-card">
+
+                <div class="ai-card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            AI DECISION ENGINE
+                        </span>
+
+                        <h3>
+                            Recommended Exit
+                        </h3>
+
+                    </div>
+
+                    <div class="brain-animation">
+                        🧠
+                    </div>
+
+                </div>
+
+
+                <div class="recommendation-main">
+
+                    <div class="recommendation-exit">
+
+                        <span>
+                            USE
+                        </span>
+
+                        <strong id="recommendedExit">
+                            ANALYZING...
+                        </strong>
+
+                    </div>
+
+
+                    <div class="recommendation-status">
+                        AI OPTIMIZED
+                    </div>
+
+                </div>
+
+
+                <div class="recommendation-metrics">
+
+                    <div>
+
+                        <span>QUEUE</span>
+
+                        <strong id="recommendationQueue">
+                            --
+                        </strong>
+
+                        <small>vehicles</small>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>WAIT</span>
+
+                        <strong id="recommendationWait">
+                            --
+                        </strong>
+
+                        <small>estimated</small>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>DISTANCE</span>
+
+                        <strong id="recommendationDistance">
+                            --
+                        </strong>
+
+                        <small>meters</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="congestion-row">
+
+                    <span>
+                        Congestion
+                    </span>
+
+                    <span
+                        id="recommendationCongestion"
+                        class="congestion-badge"
+                    >
+                        ANALYZING
+                    </span>
+
+                </div>
+
+
+                <div class="ai-explanation">
+
+                    <span>✦</span>
+
+                    <p>
+                        AI continuously compares exit queue,
+                        waiting time, distance and traffic
+                        conditions to determine the current
+                        route recommendation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- OCCUPANCY -->
+
+            <div class="occupancy-card">
+
+                <div class="card-title-row">
+
+                    <div>
+
+                        <span class="section-label">
+                            PARKING CAPACITY
+                        </span>
+
+                        <h3>
+                            Live Occupancy
+                        </h3>
+
+                    </div>
+
+                    <span class="live-dot">
+                        ● LIVE
+                    </span>
+
+                </div>
+
+
+                <div class="occupancy-visual">
+
+                    <div
+                        class="occupancy-ring"
+                        id="occupancyCircle"
+                    >
+
+                        <div class="occupancy-inner">
+
+                            <strong id="occupancyPercentage">
+                                0%
+                            </strong>
+
+                            <span>
+                                occupied
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="occupancy-details">
+
+                        <div class="capacity-line">
+
+                            <span>
+                                <i class="legend occupied"></i>
+                                Occupied
+                            </span>
+
+                            <strong id="occupiedText">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div class="capacity-line">
+
+                            <span>
+                                <i class="legend available"></i>
+                                Available
+                            </span>
+
+                            <strong id="availableText">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div class="capacity-line">
+
+                            <span>
+                                <i class="legend total"></i>
+                                Total
+                            </span>
+
+                            <strong id="totalText">
+                                --
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="capacity-progress">
+
+                    <div class="progress-header">
+
+                        <span>
+                            Parking utilization
+                        </span>
+
+                        <span id="utilizationText">
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-track">
+
+                        <div
+                            id="occupiedBar"
+                            class="progress-value"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PARKING MAP
+        ================================================== -->
+
+        <section
+            id="parking"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        SMART PARKING GRID
+                    </span>
+
+                    <h3>
+                        Live Parking Map
+                    </h3>
+
+                </div>
+
+                <div class="map-legend">
+
+                    <span>
+                        <i class="map-dot free"></i>
+                        Available
+                    </span>
+
+                    <span>
+                        <i class="map-dot busy"></i>
+                        Occupied
+                    </span>
+
+                    <span>
+                        <i class="map-dot selected"></i>
+                        AI Route
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="parking-map-card">
+
+                <div class="parking-map">
+
+                    <!-- PARKING SPACES -->
+
+                    <div
+                        class="parking-space available-space"
+                        data-space="P001"
+                    >
+                        <span>P001</span>
+                        <small>FREE</small>
+                    </div>
+
+                    <div
+                        class="parking-space occupied-space"
+                        data-space="P002"
+                    >
+                        <span>P002</span>
+                        <small>CAR</small>
+                    </div>
+
+                    <div
+                        class="parking-space available-space"
+                        data-space="P003"
+                    >
+                        <span>P003</span>
+                        <small>FREE</small>
+                    </div>
+
+                    <div
+                        class="parking-space occupied-space"
+                        data-space="P004"
+                    >
+                        <span>P004</span>
+                        <small>CAR</small>
+                    </div>
+
+                    <div
+                        class="parking-space available-space"
+                        data-space="P005"
+                    >
+                        <span>P005</span>
+                        <small>FREE</small>
+                    </div>
+
+                    <div
+                        class="parking-space available-space"
+                        data-space="P006"
+                    >
+                        <span>P006</span>
+                        <small>FREE</small>
+                    </div>
+
+                    <div
+                        class="parking-space occupied-space"
+                        data-space="P007"
+                    >
+                        <span>P007</span>
+                        <small>CAR</small>
+                    </div>
+
+
+                    <div class="parking-road road-1">
+                        <span>LANE A</span>
+                    </div>
+
+                    <div class="parking-road road-2">
+                        <span>LANE B</span>
+                    </div>
+
+
+                    <div class="map-exit exit-a">
+                        EXIT A
+                    </div>
+
+                    <div class="map-exit exit-b">
+                        EXIT B
+                    </div>
+
+                    <div class="map-exit exit-c">
+                        EXIT C
+                    </div>
+
+                </div>
+
+
+                <div class="map-info-panel">
+
+                    <div>
+
+                        <span class="section-label">
+                            PARKING MONITOR
+                        </span>
+
+                        <h4>
+                            Vision-based occupancy
+                        </h4>
+
+                        <p>
+                            Parking status is synchronized
+                            with the AI vision monitoring
+                            service.
+                        </p>
+
+                    </div>
+
+
+                    <div class="vision-counter">
+
+                        <span>
+                            DETECTED VEHICLES
+                        </span>
+
+                        <strong id="detectedVehicles">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             EXIT INTELLIGENCE
+        ================================================== -->
+
+        <section
+            id="exits"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        AI TRAFFIC ANALYSIS
+                    </span>
+
+                    <h3>
+                        Exit Intelligence
+                    </h3>
+
+                </div>
+
+                <span class="refresh-label">
+                    AUTO UPDATED
+                </span>
+
+            </div>
+
+
+            <div
+                id="exitContainer"
+                class="exit-grid"
+            >
+
+                <div class="loading-card">
+                    Loading AI exit data...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             VISION AI
+        ================================================== -->
+
+        <section
+            id="vision"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        COMPUTER VISION
+                    </span>
+
+                    <h3>
+                        Vision AI Monitoring
+                    </h3>
+
+                </div>
+
+                <div class="vision-status">
+                    <span></span>
+                    CAMERA ONLINE
+                </div>
+
+            </div>
+
+
+            <div class="vision-grid">
+
+                <!-- =================================================
+                     CAMERA CARD
+                ================================================== -->
+
+                <div class="camera-card">
+
+                    <div class="camera-header">
+
+                        <div>
+
+                            <strong>
+                                PARKING CAMERA 01
+                            </strong>
+
+                            <small>
+                                AI vehicle detection
+                            </small>
+
+                        </div>
+
+                        <span class="recording">
+                            ● LIVE
+                        </span>
+
+                    </div>
+
+
+                    <!-- LIVE CAMERA -->
+
+                    <div class="camera-screen">
+
+                        <img
+                            id="liveCameraStream"
+                            src="/api/vision/camera/stream"
+                            alt="Live Parking Camera"
+                            class="live-camera-stream"
+                        >
+
+                        <div
+                            id="cameraOfflineMessage"
+                            class="camera-placeholder camera-offline"
+                            style="display: none;"
+                        >
+
+                            <div class="camera-icon">
+                                📷
+                            </div>
+
+                            <strong>
+                                CAMERA OFFLINE
+                            </strong>
+
+                            <span>
+                                Waiting for camera stream...
+                            </span>
+
+                        </div>
+
+
+                        <div class="scan-line"></div>
+
+
+                        <!-- CAMERA OVERLAYS -->
+
+                        <div class="camera-overlay top-left">
+                            CAM-01
+                        </div>
+
+
+                        <div
+                            class="camera-overlay top-right"
+                            id="cameraAIStatus"
+                        >
+                            AI TRACKING
+                        </div>
+
+
+                        <div class="camera-overlay bottom-left">
+
+                            VEHICLES:
+
+                            <strong id="visionVehicleCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="camera-overlay bottom-right">
+                            1080P
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAMERA STATISTICS -->
+
+                    <div class="camera-stats">
+
+                        <div>
+
+                            <span>
+                                Cars
+                            </span>
+
+                            <strong id="carCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Motorcycles
+                            </span>
+
+                            <strong id="motorcycleCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Buses
+                            </span>
+
+                            <strong id="busCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Trucks
+                            </span>
+
+                            <strong id="truckCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     AI PROCESSING PANEL
+                ================================================== -->
+
+                <div class="vision-processing-card">
+
+                    <div class="card-title-row">
+
+                        <div>
+
+                            <span class="section-label">
+                                AI PROCESSING
+                            </span>
+
+                            <h3>
+                                Vision Pipeline
+                            </h3>
+
+                        </div>
+
+                        <span class="live-dot">
+                            ● LIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="processing-item">
+
+                        <div class="processing-name">
+                            Vehicle Detection
+                        </div>
+
+                        <div class="processing-bar">
+                            <span style="width: 92%"></span>
+                        </div>
+
+                        <strong>
+                            ACTIVE
+                        </strong>
+
+                    </div>
+
+
+                    <div class="processing-item">
+
+                        <div class="processing-name">
+                            Queue Detection
+                        </div>
+
+                        <div class="processing-bar">
+                            <span style="width: 87%"></span>
+                        </div>
+
+                        <strong>
+                            ACTIVE
+                        </strong>
+
+                    </div>
+
+
+                    <div class="processing-item">
+
+                        <div class="processing-name">
+                            Occupancy Analysis
+                        </div>
+
+                        <div class="processing-bar">
+                            <span style="width: 95%"></span>
+                        </div>
+
+                        <strong>
+                            ACTIVE
+                        </strong>
+
+                    </div>
+
+
+                    <div class="processing-item">
+
+                        <div class="processing-name">
+                            Route Optimization
+                        </div>
+
+                        <div class="processing-bar">
+                            <span style="width: 90%"></span>
+                        </div>
+
+                        <strong>
+                            ACTIVE
+                        </strong>
+
+                    </div>
+
+
+                    <div class="model-info">
+
+                        <span>
+                            MODEL
+                        </span>
+
+                        <strong>
+                            YOLO + Random Forest
+                        </strong>
+
+                        <small>
+                            Real-time AI inference pipeline
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             VEHICLES
+        ================================================== -->
+
+        <section
+            id="vehicles"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        VEHICLE MANAGEMENT
+                    </span>
+
+                    <h3>
+                        Active Vehicles
+                    </h3>
+
+                </div>
+
+                <div class="vehicle-count-pill">
+
+                    <span>
+                        ACTIVE
+                    </span>
+
+                    <strong id="vehicleCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <div>
+
+                        <strong>
+                            Registered Vehicles
+                        </strong>
+
+                        <small>
+                            Live parking records
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="small-action"
+                        onclick="loadVehicles()"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>VEHICLE</th>
+                                <th>PARKING SPACE</th>
+                                <th>LOCATION</th>
+                                <th>STATUS</th>
+                                <th>ACTION</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="vehicleTable">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Loading vehicles...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             EMERGENCY
+        ================================================== -->
+
+        <section
+            id="emergency"
+            class="dashboard-section"
+        >
+
+            <div class="emergency-banner">
+
+                <div class="emergency-icon">
+                    🚨
+                </div>
+
+                <div>
+
+                    <span>
+                        EMERGENCY CONTROL
+                    </span>
+
+                    <h3>
+                        Exit Safety Management
+                    </h3>
+
+                    <p>
+                        Block or restore parking exits
+                        during emergency situations.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="emergencyContainer"
+                class="emergency-grid"
+            >
+
+                <div class="loading-card">
+                    Loading emergency controls...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LIVE ACTIVITY
+        ================================================== -->
+
+        <section
+            id="activity"
+            class="dashboard-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        SYSTEM EVENTS
+                    </span>
+
+                    <h3>
+                        Live Activity
+                    </h3>
+
+                </div>
+
+                <span class="live-indicator">
+                    ● STREAMING
+                </span>
+
+            </div>
+
+
+            <div
+                id="activityFeed"
+                class="activity-feed"
+            >
+
+                <div class="activity-item">
+
+                    <span class="activity-icon blue">
+                        🧠
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            AI engine initialized
+                        </strong>
+
+                        <small>
+                            Waiting for real-time events...
+                        </small>
+
+                    </div>
+
+                    <time>
+                        NOW
+                    </time>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="dashboard-footer">
+
+            <div>
+
+                <strong>
+                    🅿️ ParkAI
+                </strong>
+
+                <span>
+                    AI Parking Exit Flow Optimizer
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Backend
+                </span>
+
+                <strong class="footer-online">
+                    ● ONLINE
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    AI
+                </span>
+
+                <strong class="footer-online">
+                    ● ACTIVE
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    WebSocket
+                </span>
+
+                <strong class="footer-online">
+                    ● CONNECTED
+                </strong>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     DASHBOARD JAVASCRIPT
+========================================================= -->
+
+<script src="/static/js/dashboard.js"></script>
+
+</body>
+
+</html>
